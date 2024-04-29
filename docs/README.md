@@ -1,0 +1,2 @@
+# ASR-UG
+I approached this task with curiosity and determination, despite my limited experience in Automatic Speech Recognition (ASR). Recognizing the opportunity for growth, I embraced the challenge, fully aware of the steep learning curve ahead. With time constraints pressing, I dedicated every available moment to research, implementation, and learning, motivated by the long-term benefits of skill development and knowledge acquisition. The code written reflects my earnest attempt at navigating unfamiliar territory.
