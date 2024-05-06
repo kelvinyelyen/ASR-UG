@@ -1,14 +1,3 @@
-import numpy as np
-from sklearn.model_selection import train_test_split
-from keras.utils import to_categorical
-import matplotlib.pyplot as plt
-
-from load_datasets import download_and_extract_dataset, load_and_preprocess_data, preprocess_audio
-from model import build_model
-from train import train_model
-from evaluate import evaluate_model
-
-
 def main():
     dataset_url = "https://www.dropbox.com/scl/fo/jvcx6dwpvuwaiboijg34d/ALVdJuoj1IyybQJ2SC3thHc?rlkey=px94zhss4kr66c619q1jfqwzt&st=9jfmfgun"
     extract_to = "data"
@@ -20,6 +9,9 @@ def main():
 
     # Preprocess audio data and labels
     labels, audio_paths = load_and_preprocess_data(extract_to)
+
+    # Convert labels to a NumPy array
+    labels = np.array(labels)
 
     # Process features
     features = []
@@ -41,7 +33,7 @@ def main():
 
     # Build the model
     input_shape = features[0].shape
-    num_classes = labels.shape[1]
+    num_classes = len(np.unique(labels))  # Calculate the number of classes
     model = build_model(input_shape=input_shape, output_dim=num_classes)
 
     # Train the model
