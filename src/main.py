@@ -1,3 +1,14 @@
+import numpy as np
+from sklearn.model_selection import train_test_split
+from keras.utils import to_categorical
+import matplotlib.pyplot as plt
+
+from load_datasets import download_and_extract_dataset, load_and_preprocess_data, preprocess_audio
+from model import build_model
+from train import train_model
+from evaluate import evaluate_model
+
+
 def main():
     dataset_url = "https://www.dropbox.com/scl/fo/jvcx6dwpvuwaiboijg34d/ALVdJuoj1IyybQJ2SC3thHc?rlkey=px94zhss4kr66c619q1jfqwzt&st=9jfmfgun"
     extract_to = "data"
@@ -5,7 +16,7 @@ def main():
     sequence_length = 1000
 
     # Download and extract the dataset
-    download_and_extract_dataset(dataset_url, extract_to)
+    # download_and_extract_dataset(dataset_url, extract_to)
 
     # Preprocess audio data and labels
     labels, audio_paths = load_and_preprocess_data(extract_to)
@@ -24,6 +35,15 @@ def main():
 
     features = np.array(features)
     print("Number of samples processed:", len(features))
+
+    # Encode labels
+    label_to_index = {label: index for index,
+                      label in enumerate(np.unique(labels))}
+    labels_encoded = [label_to_index[label] for label in labels]
+    num_classes = len(label_to_index)
+
+    # Convert labels to one-hot encoding
+    labels_one_hot = to_categorical(labels_encoded, num_classes=num_classes)
 
     # Split data into training, validation, and test sets
     X_train, X_test, y_train, y_test = train_test_split(
